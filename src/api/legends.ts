@@ -5,19 +5,12 @@ const API_URL = 'http://localhost:8080/api';
 
 export const fetchLegends = async (filters: FilterParams = {}): Promise<Legend[]> => {
   const response = await axios.get(`${API_URL}/legends`, { params: filters });
-  const data = response.data;
-
-  return data.map((legend: Legend) => ({
-    ...legend,
-    createdAt: legend.createdAt ? new Date(legend.createdAt).toISOString() : ''
-  }));
+  return response.data;
 };
-
 
 export const fetchLegendById = async (id: number): Promise<Legend> => {
   const response = await axios.get(`${API_URL}/legends/${id}`);
   return response.data;
-  
 };
 
 export const createLegend = async (legendData: LegendFormData): Promise<Legend> => {
@@ -29,11 +22,11 @@ export const createLegend = async (legendData: LegendFormData): Promise<Legend> 
       formData.append(key, String(value));
     }
   });
+  
   const response = await axios.post(`${API_URL}/legends`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' }
   });
-  return response.data; 
-  
+  return response.data;
 };
 
 export const updateLegend = async (id: number, legendData: LegendFormData): Promise<Legend> => {
@@ -45,11 +38,11 @@ export const updateLegend = async (id: number, legendData: LegendFormData): Prom
       formData.append(key, String(value));
     }
   });
+  
   const response = await axios.put(`${API_URL}/legends/${id}`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' }
   });
-  return response.data; 
-  
+  return response.data;
 };
 
 export const deleteLegend = async (id: number): Promise<void> => {

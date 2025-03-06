@@ -13,42 +13,57 @@ const EditLegend: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   useEffect(() => {
+    let isMounted = true;
+
     const loadLegend = async () => {
-      if (!id) return;
-      
+      if (!id || !isMounted) return;
+
       setIsLoading(true);
+      setError(null);
+
       try {
         const data = await fetchLegendById(parseInt(id));
-        setLegend(data);
-        setError(null);
-      } catch (error) {
-        console.error('Error fetching legend:', error);
-        setError('No se pudo cargar la leyenda. Por favor, intenta de nuevo.');
+        if (isMounted) {
+          setLegend(data);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError('Error al cargar la leyenda. Por favor, intente de nuevo.');
+          console.error('Error fetching legend:', err);
+        }
       } finally {
-        setIsLoading(false);
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     };
-    
+
     loadLegend();
+
+    return () => {
+      isMounted = false;
+    };
   }, [id]);
-  
+
   const handleSubmit = async (data: LegendFormData) => {
     if (!id) return;
-    
+
     setIsSubmitting(true);
+    setError(null);
+
     try {
       await updateLegend(parseInt(id), data);
       navigate('/');
-    } catch (error) {
-      console.error('Error updating legend:', error);
-      setError('No se pudo actualizar la leyenda. Por favor, intenta de nuevo.');
+    } catch (err) {
+      setError('Error al actualizar la leyenda. Por favor, intente de nuevo.');
+      console.error('Error updating legend:', err);
     } finally {
       setIsSubmitting(false);
     }
   };
-  
+
   return (
     <div className="container mx-auto px-4 py-8">
       <Button
@@ -59,34 +74,33 @@ const EditLegend: React.FC = () => {
         <ArrowLeft className="mr-2 h-5 w-5" />
         Volver
       </Button>
-      
+
       <div className="bg-white rounded-lg shadow-md p-6">
         <h1 className="text-2xl font-bold mb-6">Editar Leyenda</h1>
-        
+
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">
+            {error}
+          </div>
+        )}
+
         {isLoading ? (
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
-        ) : error ? (
-          <div className="text-center py-8">
-            <p className="text-red-500 mb-4">{error}</p>
-            <Button onClick={() => navigate('/')}>
-              Volver a la lista
-            </Button>
-          </div>
-        ) : legend ? (
-          <LegendForm
-            initialData={legend}
-            onSubmit={handleSubmit}
-            isSubmitting={isSubmitting}
-          />
-        ) : (
+        ) : !legend ? (
           <div className="text-center py-8">
             <p className="text-gray-600 mb-4">No se encontró la leyenda.</p>
             <Button onClick={() => navigate('/')}>
               Volver a la lista
             </Button>
           </div>
+        ) : (
+          <LegendForm
+            initialData={legend}
+            onSubmit={handleSubmit}
+            isSubmitting={isSubmitting}
+          />
         )}
       </div>
     </div>
