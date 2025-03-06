@@ -1,4 +1,4 @@
-import React, { TextareaHTMLAttributes, forwardRef } from 'react';
+import { TextareaHTMLAttributes, forwardRef } from 'react';
 
 interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
@@ -15,7 +15,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({
   ...props
 }, ref) => {
   const textareaId = id || `textarea-${Math.random().toString(36).substring(2, 9)}`;
-  
+
   return (
     <div className={`mb-4 ${fullWidth ? 'w-full' : ''}`}>
       {label && (

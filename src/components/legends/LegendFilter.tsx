@@ -14,7 +14,6 @@ const LegendFilter: React.FC<LegendFilterProps> = ({ onFilter }) => {
   const { register, handleSubmit, reset } = useForm<FilterParams>();
 
   const handleFilter = (data: FilterParams) => {
-    // Remove empty values
     const filters = Object.fromEntries(
       Object.entries(data).filter(([, value]) => value !== '')
     );

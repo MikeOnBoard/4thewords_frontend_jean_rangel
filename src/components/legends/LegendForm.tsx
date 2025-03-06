@@ -38,10 +38,8 @@ const LegendForm: React.FC<LegendFormProps> = ({
   const selectedProvince = watch('province');
   const selectedCanton = watch('canton');
 
-  // Simulate fetching cantons based on province
   useEffect(() => {
     if (selectedProvince) {
-      // In a real app, this would be an API call
       const mockCantons = [
         `${selectedProvince} Central`,
         `${selectedProvince} Norte`,
@@ -51,7 +49,6 @@ const LegendForm: React.FC<LegendFormProps> = ({
       ];
       setCantons(mockCantons);
 
-      // Reset canton and district when province changes
       if (!initialData || initialData.province !== selectedProvince) {
         setValue('canton', '');
         setValue('district', '');
@@ -61,10 +58,8 @@ const LegendForm: React.FC<LegendFormProps> = ({
     }
   }, [selectedProvince, setValue, initialData]);
 
-  // Simulate fetching districts based on canton
   useEffect(() => {
     if (selectedCanton) {
-      // In a real app, this would be an API call
       const mockDistricts = [
         `${selectedCanton} 1`,
         `${selectedCanton} 2`,
@@ -72,7 +67,6 @@ const LegendForm: React.FC<LegendFormProps> = ({
       ];
       setDistricts(mockDistricts);
 
-      // Reset district when canton changes
       if (!initialData || initialData.canton !== selectedCanton) {
         setValue('district', '');
       }

@@ -1,4 +1,4 @@
-import React, { SelectHTMLAttributes, forwardRef } from 'react';
+import { SelectHTMLAttributes, forwardRef } from 'react';
 
 interface SelectOption {
   value: string;
@@ -22,7 +22,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(({
   ...props
 }, ref) => {
   const selectId = id || `select-${Math.random().toString(36).substring(2, 9)}`;
-  
+
   return (
     <div className={`mb-4 ${fullWidth ? 'w-full' : ''}`}>
       {label && (

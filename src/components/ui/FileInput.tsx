@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 interface FileInputProps {
   label?: string;
@@ -17,10 +17,10 @@ const FileInput: React.FC<FileInputProps> = ({
 }) => {
   const [preview, setPreview] = useState<string | null>(previewUrl || null);
   const inputId = `file-input-${Math.random().toString(36).substring(2, 9)}`;
-  
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
-    
+
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -33,7 +33,7 @@ const FileInput: React.FC<FileInputProps> = ({
       onChange(null);
     }
   };
-  
+
   return (
     <div className="mb-4">
       {label && (
@@ -41,7 +41,7 @@ const FileInput: React.FC<FileInputProps> = ({
           {label}
         </label>
       )}
-      
+
       <div className="flex items-center space-x-4">
         <label className="cursor-pointer bg-white border border-gray-300 rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
           Seleccionar archivo
@@ -53,7 +53,7 @@ const FileInput: React.FC<FileInputProps> = ({
             onChange={handleChange}
           />
         </label>
-        
+
         {preview && (
           <div className="relative">
             <img
@@ -73,7 +73,7 @@ const FileInput: React.FC<FileInputProps> = ({
             </button>
           </div>
         )}
-        
+
         {!preview && previewUrl && (
           <div className="relative">
             <img
@@ -84,7 +84,7 @@ const FileInput: React.FC<FileInputProps> = ({
           </div>
         )}
       </div>
-      
+
       {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
     </div>
   );

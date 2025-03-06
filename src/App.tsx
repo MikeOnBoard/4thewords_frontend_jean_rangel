@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LegendList from './pages/LegendList';
 import CreateLegend from './pages/CreateLegend';
@@ -15,7 +14,7 @@ function App() {
             <h1 className="text-2xl font-bold">Libro Virtual de Leyendas Costarricenses</h1>
           </div>
         </header>
-        
+
         <main className="container mx-auto px-4 py-8">
           <Routes>
             <Route path="/" element={<LegendList />} />
@@ -24,7 +23,7 @@ function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
-        
+
         <footer className="bg-gray-800 text-white py-6">
           <div className="container mx-auto px-4 text-center">
             <p>&copy; 2025 Libro Virtual de Leyendas Costarricenses</p>

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import Button from './Button';
 
 interface ModalProps {
   isOpen: boolean;
@@ -17,38 +16,38 @@ const Modal: React.FC<ModalProps> = ({
   footer
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onClose();
       }
     };
-    
+
     const handleClickOutside = (e: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
         onClose();
       }
     };
-    
+
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
       document.addEventListener('mousedown', handleClickOutside);
       document.body.style.overflow = 'hidden';
     }
-    
+
     return () => {
       document.removeEventListener('keydown', handleEscape);
       document.removeEventListener('mousedown', handleClickOutside);
       document.body.style.overflow = 'auto';
     };
   }, [isOpen, onClose]);
-  
+
   if (!isOpen) return null;
-  
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div 
+      <div
         ref={modalRef}
         className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] flex flex-col"
       >
@@ -63,11 +62,11 @@ const Modal: React.FC<ModalProps> = ({
             </svg>
           </button>
         </div>
-        
+
         <div className="p-4 overflow-y-auto flex-grow">
           {children}
         </div>
-        
+
         {footer && (
           <div className="p-4 border-t flex justify-end space-x-2">
             {footer}

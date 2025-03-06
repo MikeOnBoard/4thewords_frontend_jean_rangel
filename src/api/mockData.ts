@@ -1,14 +1,12 @@
 import { Legend } from '../types';
 
-// Helper function to generate random past dates
 const getRandomPastDate = () => {
   const now = new Date();
   const pastDate = new Date(now.getTime() - Math.random() * 30 * 24 * 60 * 60 * 1000);
-  return pastDate;  // Devuelve un objeto Date en lugar de una cadena ISO
+  return pastDate;
 };
 
 
-// Mock data for Costa Rican legends
 export const mockLegends: Legend[] = [
   {
     id: 1,
@@ -34,7 +32,6 @@ export const mockLegends: Legend[] = [
   }
 ];
 
-// Categories for filtering
 export const categories = [
   "Fantasmas",
   "Criaturas míticas",
@@ -56,7 +53,6 @@ export const provinces = [
   "Limón"
 ];
 
-// Helper function to format date in relative format (e.g., "hace 2 días")
 export const formatRelativeDate = (dateString: string): string => {
   if (!dateString) return 'Fecha desconocida';
 
